@@ -16,7 +16,6 @@ async function getAllDevices(req, res) {
       }
 }
    
-
 async function getDeviceById(req,res){
        const idP=req.params.id;
        try{
@@ -29,18 +28,33 @@ async function getDeviceById(req,res){
 }
 
 async function addDevice (req,res){
+
+       console.log("FILE ==> ",req.file);
+
+       const { deviceName, deviceSeries, category, user, consumptionLimit } = req.body
+
+       if (!deviceName || !deviceSeries || !category || !user || !consumptionLimit) 
+              return res.status(400).json({error: "missing required params"})
+
        try{
-        console.log(req.file);
-        console.log(req.body);
-        const p=JSON.parse(req.body.deviceData);
-        p.image="/uploads/"+req.file.filename;
-        await catalogServices.saveDevice(p);
-        res.status(201).json("");
+        console.log("FILE ==> ",req.file);
+        console.log("BODY ==> ",req.body);
+        const image = "/public/uploads/"+req.file.filename;
+        console.log("IMAGE ==> ", image)
+        await catalogServices.saveDevice({
+              deviceName,
+              deviceSeries,
+              category,
+              user,
+              consumptionLimit,
+              image
+        });
+        res.status(201).json("device added");
        }catch(error){
          res.status(500).send("erreur d'ajout");
        }
        
-    }
+}
 
 async function deleteDeviceById(req,res){
        const idP = req.params.id;
