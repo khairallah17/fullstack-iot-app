@@ -13,7 +13,7 @@
 ```
 - finally run the backend server using the following command:
 ``` bash
-npm run start
+    npm run start
 ```
 ### FRONTEND SETUP
 - navigate to the frontend folder using the following command:
