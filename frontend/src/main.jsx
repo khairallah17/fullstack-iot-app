@@ -3,8 +3,11 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
-import Login from './pages/login.jsx'
+import Login from './pages/Login.jsx'
 import Devices from './pages/Devices.jsx'
+import 'mdb-react-ui-kit/dist/css/mdb.min.css';
+import "@fortawesome/fontawesome-free/css/all.min.css";
+import Register from './pages/register.jsx'
 
 const router = createBrowserRouter([
   {
@@ -14,6 +17,10 @@ const router = createBrowserRouter([
   {
     path: "/devices",
     element: <Devices/>
+  },
+  {
+    path: "/signup",
+    element: <Register/>
   }
 ])
 

@@ -12,17 +12,22 @@ async function saveUser(user){
 }
 
 async function loginService(loginData){
-  const user= await User.find({"email":loginData.email});
+  
+  const user = await User.find({"email":loginData.email});
+
   if(user.length>0){
-       const res=bcrypt.compare(loginData.password,user[0].password);
-       if(res){
-           const token=jwt.sign({"email":user[0].email},process.env.SECRET_KEY,{expiresIn: '1h'});
-           return token;
-       }
-       else{
-        console.log("user doesn't exist");
-       }
+      const res = await bcrypt.compare(loginData.password,user[0].password);
+      if(res){
+          const token=jwt.sign({"email":user[0].email},process.env.SECRET_KEY,{expiresIn: '1h'});
+          return token;
+      } else {
+        throw new Error("password does not match")
+      }
+  } else {
+    throw new Error("user not found 11")
   }
+
+
 }
 
 module.exports = {saveUser,loginService};
