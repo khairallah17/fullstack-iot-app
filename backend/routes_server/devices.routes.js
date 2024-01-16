@@ -5,6 +5,7 @@ const path = require("path")
 // Importation du contrôleur des devices
 const deviceController = require("../controllers_server/devices.controllers");
 const loginMiddelware = require("../middelwares/login.middelware");
+const { getAllCategories } = require("../controllers_server/category.controllers")
 
 
 // Création d'un routeur Express
@@ -35,9 +36,18 @@ router.route("/")
 // Route DELETE "/devices/:id" pour supprimer un appareil par son identifiant
 // Route PATCH "/devices/:id" pour mettre à jour juste ce qu'on veut modifier d'un appareil par son identifiant
 router.route("/:id")
-  .get(loginMiddelware.jwtVerify,deviceController.getDeviceById)
-  .delete(loginMiddelware.jwtVerify,deviceController.deleteDeviceById)
-  .patch(loginMiddelware.jwtVerify,deviceController.updateDevice);
+    .get(loginMiddelware.jwtVerify,deviceController.getDeviceById)
+    .delete(loginMiddelware.jwtVerify,deviceController.deleteDeviceById)
+    .patch(loginMiddelware.jwtVerify,deviceController.updateDevice);
+
+router.route("/consume/:id")
+    .get(loginMiddelware.jwtVerify, )
+
+router.route("/user/:id")
+    .get(loginMiddelware.jwtVerify, deviceController.getDevicesByUser)
+
+router.route("/categories")
+     .get(getAllCategories)
 
 // Exportation du routeur pour une utilisation ultérieure
 module.exports = router;

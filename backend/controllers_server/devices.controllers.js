@@ -78,4 +78,40 @@ async function updateDevice(req,res){
        
 }
 
-module.exports={getAllDevices, getDeviceById, addDevice, deleteDeviceById, updateDevice}
+async function consume(req, res) {
+
+	const id = req.params.id
+
+	try {
+
+        const device = await catalogServices.findCategoryById(id)
+		const data = await catalogServices.consumeData(device[0]._id)
+
+        console.log(data)
+
+	} catch(error) {
+		res.status()
+	}
+
+}
+
+async function getDevicesByUser(req, res) {
+
+    const id = req.params.id
+
+    if (!id)
+        return res.status(400).json({error: "no id found"})
+
+    try {
+        
+        const devices = await catalogServices.getDevicesByUser(id)
+
+        return res.status(200).json(devices)
+
+    } catch(error) {
+        return res.status(500).json({error: error.message})
+    }
+
+}
+
+module.exports={getAllDevices, getDeviceById, addDevice, deleteDeviceById, updateDevice, getDevicesByUser}

@@ -10,10 +10,10 @@ async function getAllCategories(req, res) {
           else{
               categories = await catalogServices.findCategories();
           }
-       res.status(200).json(categories);
+              res.status(200).json(categories);
        }catch(error){
-       res.status(500).send("Erreur dans le serveur");
-      }
+              res.status(500).send("Erreur dans le serveur");
+       }
 }
 
 async function addCategory(req, res) {

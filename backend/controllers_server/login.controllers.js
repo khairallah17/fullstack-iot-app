@@ -1,36 +1,31 @@
 const loginServices = require("../services/login.services")
-const { getUserByEmail } = require("../services/users.services")
 
 async function signUp(req,res){
 
-       const { email } = req.body
+    const { email, lName, fName, password } = req.body
 
-       if (!email)
-              return res.status(400).json({error: "required email"})
+    if (!email || !lName || !fName || !password)
+        return res.status(400).json({error: "required fields not found"})
 
-       try{
+    try{
 
-              const foundUser = await getUserByEmail(email)
-              if (foundUser)
-                     return res.status(400).json({error: "user already exists"})
-              const user = await loginServices.saveUser(req.body);
-              res.status(201).json(user);
+        const user = await loginServices.saveUser(req.body);
 
-       } catch(error) {
+        return res.status(201).json(user);
 
-              console.log(error);
-              res.status(500).send("Erreur dans l'ajout de l'utilisateur");
+    } catch(error) {
+        return res.status(500).send({error: error.message});
+    }
 
-       }
 }
 
 async function login(req,res){
 
        try{
-            const token=await loginServices.loginService(req.body);
-            res.status(200).json(token);
+            const token = await loginServices.loginService(req.body);
+            return res.status(200).json(token);
        } catch(error) {
-            res.status(500).json({error: error.message});
+            return res.status(500).json({error: error.message});
        }
 }
 

@@ -1,5 +1,9 @@
 const Device=require("../models/Device")
 const Category=require("../models/Category")
+const dotenv = require("dotenv")
+const ObjectID = require('mongodb').ObjectID;
+
+dotenv.config()
 
 async function findDevices() {
        return await Device.find().populate("category");
@@ -59,5 +63,67 @@ async function editCategory(idC,c){
        
 }
 
-module.exports={findDevices, findDeviceById, saveDevice, removeDeviceById, editDevice,
-findCategories,findCategoryById,findCategoryByQuery,saveCategory,editCategory,removeCategoryById,findDeviceByQuery}
+async function nodeRed(type) {
+
+    try {
+
+        const data = await fetch(`${process.env.NODE_RED}/data`,{
+            method: "POST",
+            body: {
+              "type": type
+            }
+        }).then(res => res.json()).catch(err => new Error("node red connection field"))
+
+        console.log(data)
+        
+        return data
+    
+    } catch (error) {
+        throw new Error("error getting data from node Red")
+    }
+
+}
+
+async function consumeData() {
+
+    try {
+
+        const data = await nodeRed()
+
+        return (data)
+
+    } catch (error) {
+        throw new Error("error getting data from device")
+    }
+
+}
+
+async function getDevicesByUser(userId) {
+
+    try {
+
+        const devices = await Device.find({user: userId}).populate('category')
+
+        return devices
+
+    } catch (error) {
+        throw new Error(error)
+    }
+
+}
+
+module.exports={findDevices,
+                findDeviceById,
+                saveDevice,
+                removeDeviceById,
+                editDevice,
+                findCategories,
+                findCategoryById,
+                findCategoryByQuery,
+                saveCategory,
+                editCategory,
+                removeCategoryById,
+                findDeviceByQuery,
+                nodeRed,
+                consumeData,
+                getDevicesByUser}
