@@ -28,8 +28,6 @@ const Login = () => {
 
      <div className="container h-screen mx-auto">
       <h1 className='font-bold text-5xl text-center'>Mohammed khairallah</h1>
-      <h1 className='font-bold text-5xl text-center'>Aya Malki</h1>
-      <h1 className='font-bold text-5xl text-center'>Saad Haliba</h1>
        <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img

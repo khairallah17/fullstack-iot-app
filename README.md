@@ -28,3 +28,15 @@
 ``` bash
     npm run dev
 ```
+## IN APP SCREENSHOTS
+- login page
+![login page](./assets/login.png)
+
+- home page
+![home page](./assets/home.png)
+
+- devices page
+![devices](./assets/devices.png)
+
+- add devices
+![add devices](./assets/add-device.png)
